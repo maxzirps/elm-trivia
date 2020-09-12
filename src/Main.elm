@@ -1,10 +1,12 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, text, pre)
+import Html exposing (Html, text, div, pre)
+import Html.Attributes exposing (style)
 import Http
 import Json.Decode as JD exposing (Decoder, field, int, string, list)
-import List exposing (head)
+import List exposing (head, map)
+import String exposing (join)
 
 
 -- MAIN
@@ -37,9 +39,6 @@ type alias Question =
     -- correct_answer: String,
     -- incorrect_answers: List String
     }
-
-type alias Questions = List Question
-
 
 
 init : () -> (Model, Cmd Msg)
@@ -96,7 +95,8 @@ view model =
       text "Loading..."
 
     Success questions ->
-      pre [] [ text (Maybe.withDefault {question= ""} (head questions) ).question ]
+      div [style "text-align" "center", style "margin-top" "10rem"] 
+      [ pre [] [text (concatQuestions questions)] ]
 
 
 
@@ -107,6 +107,11 @@ fetchQuestion = Http.get
       { url = "https://opentdb.com/api.php?amount=10&type=multiple"
       , expect = Http.expectJson GotText questionsDecoder
       }
+
+concatQuestions: (List Question) -> String
+concatQuestions questions = 
+  join "\n\n" (map (\x -> x.question) questions)
+
 
 questionDecoder: Decoder Question
 questionDecoder = 
