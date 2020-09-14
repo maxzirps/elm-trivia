@@ -4,8 +4,8 @@ import Browser
 import Html exposing (Html, text, div, pre)
 import Html.Attributes exposing (style)
 import Http
-import Json.Decode as JD exposing (Decoder, field, int, string, list)
-import List exposing (head, map)
+import Json.Decode as JD exposing (Decoder, field, string, list)
+import List exposing (map)
 import String exposing (join)
 
 
