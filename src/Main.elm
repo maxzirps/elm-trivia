@@ -5,7 +5,7 @@ import Html exposing (Html, text, div, pre, button)
 import Html.Attributes exposing (style)
 import Http
 import Json.Decode as JD exposing (Decoder, field, string, list, map6)
-import List exposing (map, append)
+import List exposing (map, append, sort)
 import String exposing (join)
 
 
@@ -113,7 +113,7 @@ createHTMLElementsForQuestions questions =
   div [] (map (\x -> 
   div[style "margin" "2rem", style "padding" "2rem" ] [ 
     div [] [ text x.question ], 
-    div [] ((button [style "margin" "0.3rem  "] [text x.correct_answer]) :: (map (\y -> button [style "margin" "0.3rem  "] [text y]) x.incorrect_answers))
+    div [] (map (\y -> button [style "margin" "0.3rem  "] [text y]) (sort (x.correct_answer :: x.incorrect_answers)))
   ]
    ) questions)
 
