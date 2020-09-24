@@ -95,7 +95,7 @@ view model =
       text "Loading..."
 
     Success questions ->
-      div [style "text-align" "center", style "margin-top" "10rem"] 
+      div [style "text-align" "center"] 
       [ div [] [createHTMLElementsForQuestions questions] ]
 
 
@@ -111,9 +111,9 @@ fetchQuestions = Http.get
 createHTMLElementsForQuestions: (List Question) -> Html msg
 createHTMLElementsForQuestions questions = 
   div [] (map (\x -> 
-  div[style "margin" "2rem", style "padding" "2rem" ] [ 
+  div[style "margin" "2rem", style "padding" "2rem", style "padding-top" "0rem" ] [ 
     div [] [ text x.question ], 
-    div [] (map (\y -> button [style "margin" "0.3rem  "] [text y]) (sort (x.correct_answer :: x.incorrect_answers)))
+    div [style "margin-top" "1rem"] (map (\y -> button [style "margin" "0.3rem  "] [text y]) (sort (x.correct_answer :: x.incorrect_answers)))
   ]
    ) questions)
 
